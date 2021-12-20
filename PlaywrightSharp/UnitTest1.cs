@@ -109,7 +109,7 @@ namespace PlaywrightSharp
         {
             int a = 1;
             int b = 1;
-            Assert.AreEqual(a - b, 2, "There was an error");
+            Assert.AreEqual(a - b, 0, "There was an error");
         }
     }
 }
