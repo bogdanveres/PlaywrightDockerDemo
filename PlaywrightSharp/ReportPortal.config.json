@@ -1,0 +1,17 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/reportportal/agent-net-vstest/master/src/ReportPortal.VSTest.TestLogger/ReportPortal.config.schema",
+  "enabled": true,
+  "server": {
+    "url": "http://127.0.0.1:8080/api/v1",
+    "project": "PlaywrightSharp",
+    "authentication": {
+      "uuid": "e8d0552e-56b3-48cb-8db1-98f5bcedb012"
+    }
+  },
+  "launch": {
+    "name": "VS Test Demo Launch",
+    "description": "this is description",
+    "debugMode": true,
+    "attributes": [ "t1", "os:win10" ]
+  }
+}
