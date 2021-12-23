@@ -13,4 +13,7 @@ node {
         mstest failOnError: false, keepLongStdio: true
         archiveArtifacts artifacts: '**/*.trx', followSymlinks: false
     }
+    stage('Send Mail') {
+        emailext body: 'Am rulat cu succes.', subject: 'Build completed', to: 'vbsorin@aaa.com'
+    }
 }
