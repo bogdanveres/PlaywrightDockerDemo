@@ -1,4 +1,4 @@
-node {
+node('MacAgent') {
     def mvnHome
     stage('Preparation') { // for display purposes
         deleteDir()
