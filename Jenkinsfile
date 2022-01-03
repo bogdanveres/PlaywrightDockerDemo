@@ -5,7 +5,7 @@ pipeline {
       parallel {
         stage('Build') {
           steps {
-            echo '"Build solution ${ChromePath}"'
+            echo "Build solution ${ChromePath}"
           }
         }
 
