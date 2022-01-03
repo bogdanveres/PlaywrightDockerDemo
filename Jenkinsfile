@@ -5,7 +5,7 @@ pipeline {
       parallel {
         stage('Build') {
           steps {
-            echo "Build solution ${ChromePath}"
+            echo "Build solution ${CHROMEPATH}"
           }
         }
 
@@ -26,6 +26,6 @@ pipeline {
 
   }
   environment {
-    ChromePath = '/test/location'
+    CHROMEPATH = '/cacat'
   }
 }
