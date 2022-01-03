@@ -1,12 +1,17 @@
 pipeline {
-  agent any
+  agent {
+    node {
+      label 'built-in'
+    }
+
+  }
   stages {
     stage('Build') {
       parallel {
         stage('Build') {
           steps {
             echo "Build solution ${CHROMEPATH}"
-            dotnetTest(configuration: 'Debug', option: '-l:trx', project: 'PlaywrightSharp.csproj', sdk: 'NET5', workDirectory: 'PlaywrightSharp', runtime: '5.0.13', specificSdkVersion: true)
+            dotnetTest(configuration: 'Debug', option: '-l:trx', project: 'PlaywrightSharp.csproj', sdk: 'Net5Master', workDirectory: 'PlaywrightSharp', runtime: '5.0.13', specificSdkVersion: true)
           }
         }
 
