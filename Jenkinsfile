@@ -5,7 +5,7 @@ pipeline {
       parallel {
         stage('Build') {
           steps {
-            echo 'Build solution'
+            echo '"Build solution ${ChromePath}"'
           }
         }
 
@@ -24,5 +24,8 @@ pipeline {
       }
     }
 
+  }
+  environment {
+    ChromePath = '/test/location'
   }
 }
