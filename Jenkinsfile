@@ -6,6 +6,7 @@ pipeline {
         stage('Build') {
           steps {
             echo "Build solution ${CHROMEPATH}"
+            dotnetBuild(showSdkInfo: true, options: '-l:trx', sdk: 'NET5', configuration: 'Debug', workDirectory: 'PlaywrightSharp', project: 'PlaywrightSharp.csproj', target: 'NET5')
           }
         }
 
