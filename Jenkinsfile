@@ -6,7 +6,7 @@ pipeline {
         stage('Build') {
           steps {
             echo "Build solution ${CHROMEPATH}"
-            dotnetTest(configuration: 'Debug', option: '-l:trx', project: 'PlaywrightSharp.csproj', sdk: 'NET5', workDirectory: 'PlaywrightSharp')
+            dotnetTest(configuration: 'Debug', option: '-l:trx', project: 'PlaywrightSharp.csproj', sdk: 'dotnet', workDirectory: 'PlaywrightSharp')
           }
         }
 
