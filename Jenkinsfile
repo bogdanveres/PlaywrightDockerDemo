@@ -30,8 +30,14 @@ pipeline {
         echo 'Deploy app.'
       }
     }
-
   }
+
+  post {
+    always {
+        junit '5.0.13/**/*.trx'
+      }
+    }
+
   environment {
     CHROMEPATH = '/cacat'
   }
