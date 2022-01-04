@@ -32,6 +32,12 @@ pipeline {
       }
     }
 
+    stage('Clean') {
+      steps {
+        dotnetClean(configuration: 'Debug', workDirectory: 'PlaywrightSharp', sdk: 'Net5Master', runtime: '5.0.13', project: 'PlaywrightSharp.csproj')
+      }
+    }
+
   }
   environment {
     CHROMEPATH = '/cacat'
