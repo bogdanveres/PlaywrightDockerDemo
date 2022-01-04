@@ -6,6 +6,12 @@ pipeline {
 
   }
   stages {
+    stage('Clean') {
+      steps {
+        dotnetClean(workDirectory: 'PlaywrightSharp', project: 'PlaywrightSharp.csproj')
+      }
+    }
+
     stage('Build') {
       parallel {
         stage('Chrome') {
@@ -29,12 +35,6 @@ pipeline {
       steps {
         echo 'Deploy app.'
         mstest(testResultsFile: '**/*.trx')
-      }
-    }
-
-    stage('Clean') {
-      steps {
-        dotnetClean(configuration: 'Debug', workDirectory: 'PlaywrightSharp', sdk: 'Net5Master', runtime: '5.0.13', project: 'PlaywrightSharp.csproj')
       }
     }
 
