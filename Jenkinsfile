@@ -16,15 +16,8 @@ pipeline {
         }
 
         stage('Test') {
-          agent {
-            {
-              label 'MacOS'
-              steps {
-                echo 'Test app'
-                dotnetTest(configuration: 'Debug', option: '-l:trx', project: 'PlaywrightSharp.csproj', sdk: 'Net5Master', workDirectory: 'PlaywrightSharp', runtime: '5.0.13', specificSdkVersion: true, settings: 'Firefox.runsettings')
-                }
-            }
-          }
+          echo 'Test app'
+          dotnetTest(configuration: 'Debug', option: '-l:trx', project: 'PlaywrightSharp.csproj', sdk: 'Net5Master', workDirectory: 'PlaywrightSharp', runtime: '5.0.13', specificSdkVersion: true, settings: 'Firefox.runsettings')
         }
       }
     }
