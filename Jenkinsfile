@@ -28,17 +28,18 @@ pipeline {
     stage('Deploy') {
       steps {
         echo 'Deploy app.'
+        mstest(testResultsFile: '**/*.trx')
       }
     }
+
   }
-
-  post {
-    always {
-        junit '5.0.13/**/*.trx'
-      }
-    }
-
   environment {
     CHROMEPATH = '/cacat'
+  }
+  post {
+    always {
+      junit '5.0.13/**/*.trx'
+    }
+
   }
 }
