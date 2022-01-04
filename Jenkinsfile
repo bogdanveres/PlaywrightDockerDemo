@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Clean') {
       steps {
-        dotnetClean(workDirectory: 'PlaywrightSharp', project: 'PlaywrightSharp.csproj')
+        dotnetClean(workDirectory: 'PlaywrightSharp', project: 'PlaywrightSharp.csproj', configuration: 'Debug', sdk: 'Net5Master', runtime: '5.0.13')
       }
     }
 
