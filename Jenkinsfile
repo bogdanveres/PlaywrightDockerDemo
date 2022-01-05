@@ -23,14 +23,14 @@ pipeline {
         stage('Chrome') {
           steps {
             echo "Build solution ${CHROMEPATH}"
-            dotnetTest(configuration: 'Debug', option: '-l:trx --no-build', project: 'PlaywrightSharp.csproj', sdk: 'Net5Master', workDirectory: 'PlaywrightSharp', runtime: '5.0.13', specificSdkVersion: true, settings: 'Chrome.runsettings')
+            dotnetTest(configuration: 'Debug', project: 'PlaywrightSharp.csproj', sdk: 'Net5Master', workDirectory: 'PlaywrightSharp', runtime: '5.0.13', specificSdkVersion: true, settings: 'Chrome.runsettings', options: '-l:trx --no-build')
           }
         }
 
         stage('Firefox') {
           steps {
             echo 'Run on chrome'
-            dotnetTest(configuration: 'Debug', option: '-l:trx --no-build', project: 'PlaywrightSharp.csproj', sdk: 'Net5Master', workDirectory: 'PlaywrightSharp', runtime: '5.0.13', specificSdkVersion: true, settings: 'Firefox.runsettings')
+            dotnetTest(configuration: 'Debug', project: 'PlaywrightSharp.csproj', sdk: 'Net5Master', workDirectory: 'PlaywrightSharp', runtime: '5.0.13', specificSdkVersion: true, settings: 'Firefox.runsettings', options: '-l:trx --no-build')
           }
         }
 
