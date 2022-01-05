@@ -13,6 +13,12 @@ pipeline {
     }
 
     stage('Build') {
+      steps {
+        dotnetBuild(configuration: 'Debug', project: 'PlaywrightSharp.csproj', sdk: 'Net5Master', workDirectory: 'PlaywrightSharp', runtime: '5.0.13', specificSdkVersion: true)
+      }
+    }
+
+    stage('Test') {
       parallel {
         stage('Chrome') {
           steps {
@@ -31,9 +37,9 @@ pipeline {
       }
     }
 
-    stage('Deploy') {
+    stage('Publish results') {
       steps {
-        echo 'Deploy app.'
+        echo 'Archiving artefacts.'
         mstest(testResultsFile: '**/*.trx')
       }
     }
