@@ -1,8 +1,0 @@
-version: '3.4'
-
-services:
-  playwrightsharp:
-    image: ${DOCKER_REGISTRY-}playwrightsharp
-    build:
-      context: .
-      dockerfile: PlaywrightSharp/Dockerfile
