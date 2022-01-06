@@ -1,14 +1,17 @@
 pipeline {
-    agent {
-        dockerfile true
-        label 'sclavu'
-    }
-    
-    stages {
-        stage('Build') {
-            steps {
-                sh 'node --version'
-                sh 'pwd'
+    agent none {
+
+        stages {
+            stage('Build') {
+                agent {
+                    dockerfile true
+
+                    steps {
+                        sh 'node --version'
+                        sh 'pwd'
+                    }
+                }
+                
             }
         }
     }
