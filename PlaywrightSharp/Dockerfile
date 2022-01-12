@@ -1,57 +1,34 @@
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    xvfb
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    fonts-liberation\
-    libasound2\
-    libatk-bridge2.0-0\
-    libatk1.0-0\
-    libatspi2.0-0\
-    libcairo2\
-    libcups2\
-    libdbus-1-3\
-    libdrm2\
-    libgbm1\
-    libglib2.0-0\
-    libgtk-3-0\
-    libnspr4\
-    libnss3\
-    libpango-1.0-0\
-    libx11-6\
-    libxcb1\
-    libxcomposite1\
-    libxdamage1\
-    libxext6\
-    libxfixes3\
-    libxrandr2
-
- RUN apt-get update && apt-get install -y npm && \
-     npm i playwright-chromium@1.14.1 && \
-     npm i playwright-firefox@1.14.1 && \
-     npm i playwright-webkit@1.14.1
-
-RUN apt-get remove nodejs -y
-
-
-
+#FROM mcr.microsoft.com/dotnet/runtime:5.0-buster-slim AS base
+FROM mcr.microsoft.com/dotnet/runtime:5.0.404-focal AS base
 WORKDIR /app
-EXPOSE 80
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0.404-focal AS build
 WORKDIR /src
-COPY ["PlaywrightSharp/PlaywrightSharp.csproj", "PlaywrightSharp/"]
+COPY ["PlaywrightSharp.csproj", "PlaywrightSharp/"]
 RUN dotnet restore "PlaywrightSharp/PlaywrightSharp.csproj"
-COPY . .
+COPY . "/src/PlaywrightSharp"
 WORKDIR "/src/PlaywrightSharp"
+RUN apt-get update -yq && apt-get upgrade -yq && apt-get install -yq curl git nano
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -yq nodejs build-essential
+RUN npm install -g npm
+
+RUN apt-get install -y wget xvfb unzip
+
+# Set up the Chrome PPA
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
+
+# Update the package list and install chrome
+RUN apt-get update -y
+RUN apt-get install -y google-chrome-stable
+
+#RUN dotnet add package Microsoft.Playwright
 RUN dotnet build "PlaywrightSharp.csproj" -c Release -o /app/build
+RUN npx playwright install-deps
+RUN npx playwright install
 
-FROM build AS publish
-RUN dotnet test "PlaywrightSharp.csproj" -c Release
-RUN dotnet publish "PlaywrightSharp.csproj" -c Release -o /app/publish
+# RUN dotnet test --no-build
 
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "PlaywrightSharp.dll"]
+FROM build AS testrunner
+WORKDIR "/src/PlaywrightSharp"
+CMD ["dotnet", "test", "--no-restore"]
