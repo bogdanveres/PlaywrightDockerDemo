@@ -32,4 +32,4 @@ RUN npx playwright install
 
 FROM build AS testrunner
 WORKDIR "/src/PlaywrightSharp"
-CMD ["dotnet", "test", "--no-restore"]
+CMD ["dotnet", "test", "--no-restore", "-s Chrome.runsettings"]
