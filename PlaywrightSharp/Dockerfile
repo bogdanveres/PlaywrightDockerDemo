@@ -21,6 +21,7 @@ RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/so
 # Update the package list and install chrome
 RUN apt-get update -y
 RUN apt-get install -y google-chrome-stable
+RUN apt-get install -y firefox
 
 #RUN dotnet add package Microsoft.Playwright
 RUN dotnet build "PlaywrightSharp.csproj" -c Release -o /app/build

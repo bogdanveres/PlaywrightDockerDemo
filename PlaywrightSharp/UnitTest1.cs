@@ -94,7 +94,7 @@ namespace PlaywrightSharp
         public static async Task Main()
         {
             using var playwright = await Playwright.CreateAsync();
-            await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
+            await using var browser = await playwright.Firefox.LaunchAsync(new BrowserTypeLaunchOptions
             {
                 Headless = true,
             });
@@ -112,7 +112,7 @@ namespace PlaywrightSharp
         [Test]
         public static async Task Add()
         {
-            Thread.Sleep(TimeSpan.FromMinutes(5));
+            //Thread.Sleep(TimeSpan.FromMinutes(5));
             int a = 1;
             int b = 1;
             Assert.AreEqual(a + b, 2, "There was an error");
