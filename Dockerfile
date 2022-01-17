@@ -1,4 +1,8 @@
 #FROM mcr.microsoft.com/dotnet/runtime:5.0-buster-slim AS base
+FROM jenkins/slave:latest-jdk11
+
+#RUN usermod -a -G root jenkins
+
 FROM mcr.microsoft.com/dotnet/runtime:5.0.404-focal AS base
 WORKDIR /app
 
@@ -36,3 +40,7 @@ FROM build AS testrunner
 WORKDIR "/src/PlaywrightSharp"
 #CMD ["dotnet", "test", "PlaywrightSharp.csproj", "--no-restore", "--settings:Chrome.runsettings"]
 CMD ["dotnet", "test", "PlaywrightSharp.csproj", "--no-restore"]
+
+
+# Good idea to switch back to the jenkins user.
+#USER jenkins
