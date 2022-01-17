@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/runtime:5.0.404-focal AS base
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0.404-focal AS build
-WORKDIR /src
+WORKDIR /src/..
 COPY ["PlaywrightSharp.csproj", "PlaywrightSharp/"]
 RUN dotnet restore "PlaywrightSharp/PlaywrightSharp.csproj"
 COPY . "/src/PlaywrightSharp"
