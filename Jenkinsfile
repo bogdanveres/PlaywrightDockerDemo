@@ -1,13 +1,11 @@
 pipeline {
     agent {
-        dockerfile true
+        docker { image 'vbsorin/playwrightsharp' }
     }
-    
     stages {
-        stage('Build') {
+        stage('Test') {
             steps {
                 sh 'node --version'
-                sh 'pwd'
             }
         }
     }
