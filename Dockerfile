@@ -30,7 +30,7 @@ RUN apt-get install -y google-chrome-stable
 RUN apt-get install -y firefox
 
 #RUN dotnet add package Microsoft.Playwright
-RUN dotnet build "PlaywrightSharp.csproj" -c Release -o /app/build
+#RUN dotnet build "PlaywrightSharp.csproj" -c Release -o /app/build
 RUN npx playwright install-deps
 RUN npx playwright install
 
@@ -39,7 +39,7 @@ RUN npx playwright install
 FROM build AS testrunner
 WORKDIR "/src/PlaywrightSharp"
 #CMD ["dotnet", "test", "PlaywrightSharp.csproj", "--no-restore", "--settings:Chrome.runsettings"]
-CMD ["dotnet", "test", "PlaywrightSharp.csproj", "--no-restore"]
+#CMD ["dotnet", "test", "PlaywrightSharp.csproj", "--no-restore"]
 
 
 # Good idea to switch back to the jenkins user.
