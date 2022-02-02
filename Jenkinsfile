@@ -1,9 +1,15 @@
 pipeline {
-    agent any { dockerfile true }
+    agent {
+        docker {
+            image 'vbsorin/playwrightdemonet'
+            args '-u root:root -v /Users/sorin.veres/Documents/Logs:/src/PlaywrightSharp/TestResults'
+        }   
+    }
     stages {
-        stage('Test') {
+        stage('Build') {
             steps {
-                sh 'pwd'
+                sh 'dotnet test /src/PlaywrightSharp.sln --settings:/src/PlaywrightSharp/Firefox.runsettings --logger:trx'
+                
             }
         }
     }
