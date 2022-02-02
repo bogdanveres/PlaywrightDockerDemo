@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            agent {
+                docker {
+                    image 'vbsorin/playwrightdemonet'
+                    args '-u root:root -v /Users/bogdanveres/.jenkins/workspace/DockerAgent@2/TestResults:/src/PlaywrightSharp/TestResults'
+                }
+            }
+            steps {
+                sh 'dotnet test /src/PlaywrightSharp.sln --settings:/src/PlaywrightSharp/Firefox.runsettings --logger:trx'
+            }
+        }
+        stage('Publish') {
+            agent {
+                label 'built-in'
+            }
+            steps {
+                //sh 'echo ${WORKSPACE}'
+                archiveArtifacts artifacts: 'TestResults/*.trx', fingerprint: true
+            }
+        }
+    }
+}
