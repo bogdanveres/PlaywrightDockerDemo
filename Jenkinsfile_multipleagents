@@ -5,7 +5,7 @@ pipeline {
             agent {
                 docker {
                     image 'vbsorin/playwrightdemonet'
-                    args '-u root:root -v /Users/bogdanveres/.jenkins/workspace/DockerAgent@2/TestResults:/src/PlaywrightSharp/TestResults'
+                    args '-u root:root -v ${WORKSPACE}/TestResults:/src/PlaywrightSharp/TestResults'
                 }
             }
             steps {
