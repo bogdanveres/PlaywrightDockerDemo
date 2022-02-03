@@ -28,7 +28,6 @@ pipeline {
                 label 'built-in'
             }
             steps {
-                //sh 'echo ${WORKSPACE}'
                 mstest testResultsFile:'**/*.trx', keepLongStdio: true, failOnError: false
                 archiveArtifacts artifacts: 'TestResults/*.trx', fingerprint: true
                 always {
