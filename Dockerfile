@@ -1,18 +1,13 @@
-#FROM mcr.microsoft.com/dotnet/runtime:5.0-buster-slim AS base
-FROM jenkins/slave:latest-jdk11
-
-#RUN usermod -a -G root jenkins
-
-FROM mcr.microsoft.com/dotnet/runtime:5.0.404-focal AS base
-WORKDIR /app
-
 FROM mcr.microsoft.com/dotnet/sdk:5.0.404-focal AS build
 WORKDIR /src
 COPY ["PlaywrightSharp/PlaywrightSharp.csproj", "PlaywrightSharp/"]
 RUN dotnet restore "PlaywrightSharp/PlaywrightSharp.csproj"
 
-WORKDIR "/src/PlaywrightSharp"
+ARG dotnet_cli_home_arg=/tmp/
+ENV DOTNET_CLI_HOME=$dotnet_cli_home_arg
+
 COPY . .
+WORKDIR "/src/PlaywrightSharp"
 
 RUN apt-get update -yq && apt-get upgrade -yq && apt-get install -yq curl git nano
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -yq nodejs build-essential
@@ -30,17 +25,13 @@ RUN apt-get install -y google-chrome-stable
 RUN apt-get install -y firefox
 
 #RUN dotnet add package Microsoft.Playwright
-#RUN dotnet build "PlaywrightSharp.csproj" -c Release -o /app/build
+RUN dotnet build "PlaywrightSharp.csproj" -c Release -o /app/build
 RUN npx playwright install-deps
 RUN npx playwright install
 
 # RUN dotnet test --no-build
-
 FROM build AS testrunner
 WORKDIR "/src/PlaywrightSharp"
-#CMD ["dotnet", "test", "PlaywrightSharp.csproj", "--no-restore", "--settings:Chrome.runsettings"]
-#CMD ["dotnet", "test", "PlaywrightSharp.csproj", "--no-restore"]
+CMD ["dotnet", "PlaywrightSharp.dll", "--no-restore", "--settings:Firefox.runsettings", "--logger:trx"]
 
-
-# Good idea to switch back to the jenkins user.
-#USER jenkins
+#docker run -it -v /Users/bogdanveres/Documents/Logs:/src/PlaywrightSharp/TestResults vbsorin/playwrightnet
