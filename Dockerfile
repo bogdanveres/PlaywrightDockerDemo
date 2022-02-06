@@ -3,9 +3,6 @@ WORKDIR /src
 COPY ["PlaywrightSharp/PlaywrightSharp.csproj", "PlaywrightSharp/"]
 RUN dotnet restore "PlaywrightSharp/PlaywrightSharp.csproj"
 
-ARG dotnet_cli_home_arg=/tmp/
-ENV DOTNET_CLI_HOME=$dotnet_cli_home_arg
-
 COPY . .
 WORKDIR "/src/PlaywrightSharp"
 
@@ -30,8 +27,9 @@ RUN npx playwright install-deps
 RUN npx playwright install
 
 # RUN dotnet test --no-build
+
 FROM build AS testrunner
 WORKDIR "/src/PlaywrightSharp"
-CMD ["dotnet", "PlaywrightSharp.dll", "--no-restore", "--settings:Firefox.runsettings", "--logger:trx"]
+CMD ["dotnet", "test", "--no-restore", "--settings:Firefox.runsettings", "--logger:trx"]
 
 #docker run -it -v /Users/bogdanveres/Documents/Logs:/src/PlaywrightSharp/TestResults vbsorin/playwrightnet
