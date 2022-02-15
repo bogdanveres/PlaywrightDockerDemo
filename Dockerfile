@@ -1,3 +1,5 @@
+FROM mcr.microsoft.com/playwright:focal
+
 FROM mcr.microsoft.com/dotnet/sdk:5.0.404-focal AS build
 WORKDIR /src
 COPY ["PlaywrightSharp/PlaywrightSharp.csproj", "PlaywrightSharp/"]
@@ -17,11 +19,14 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
 RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
 
 # Update the package list and install chrome
-RUN apt-get update -y
-RUN apt-get install -y google-chrome-stable
-RUN apt-get install -y firefox
+#RUN apt-get update -y
+#RUN apt-get install -y google-chrome-stable
+#RUN apt-get install -y firefox
 
-#RUN dotnet add package Microsoft.Playwright
+
+
+
+RUN dotnet add package Microsoft.Playwright
 RUN dotnet build "PlaywrightSharp.csproj" -c Release -o /app/build
 RUN npx playwright install-deps
 RUN npx playwright install
