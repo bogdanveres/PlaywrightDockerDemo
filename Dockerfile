@@ -27,6 +27,7 @@ RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/so
 
 
 RUN dotnet add package Microsoft.Playwright
+
 RUN dotnet build "PlaywrightSharp.csproj" -c Release -o /app/build
 #RUN npx playwright install-deps
 #RUN npx playwright install
@@ -34,9 +35,13 @@ RUN dotnet build "PlaywrightSharp.csproj" -c Release -o /app/build
 # RUN dotnet test --no-build
 
 FROM build AS testrunner
-RUN npx playwright install-deps
-RUN npx playwright install
+
+
 WORKDIR "/src/PlaywrightSharp"
+
+#RUN npx playwright install-deps
+RUN npx playwright install
+RUN npx playwright install-deps
 CMD ["dotnet", "test", "--no-restore", "--settings:Firefox.runsettings", "--logger:trx"]
 
 #docker run -it -v /Users/bogdanveres/Documents/Logs:/src/PlaywrightSharp/TestResults vbsorin/playwrightnet
