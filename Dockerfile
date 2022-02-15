@@ -28,12 +28,14 @@ RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/so
 
 RUN dotnet add package Microsoft.Playwright
 RUN dotnet build "PlaywrightSharp.csproj" -c Release -o /app/build
-RUN npx playwright install-deps
-RUN npx playwright install
+#RUN npx playwright install-deps
+#RUN npx playwright install
 
 # RUN dotnet test --no-build
 
 FROM build AS testrunner
+RUN npx playwright install-deps
+RUN npx playwright install
 WORKDIR "/src/PlaywrightSharp"
 CMD ["dotnet", "test", "--no-restore", "--settings:Firefox.runsettings", "--logger:trx"]
 
