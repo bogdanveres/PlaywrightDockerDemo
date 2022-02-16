@@ -40,8 +40,8 @@ FROM build AS testrunner
 WORKDIR "/src/PlaywrightSharp"
 
 #RUN npx playwright install-deps
-RUN npx playwright install
-RUN npx playwright install-deps
+RUN npx playwright@1.18.1 install
+RUN npx playwright@1.18.1 install-deps
 CMD ["dotnet", "test", "--no-restore", "--settings:Firefox.runsettings", "--logger:trx"]
 
 #docker run -it -v /Users/bogdanveres/Documents/Logs:/src/PlaywrightSharp/TestResults vbsorin/playwrightnet
