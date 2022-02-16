@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright:focal
+#FROM mcr.microsoft.com/playwright:focal
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0.404-focal AS build
 WORKDIR /src
