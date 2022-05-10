@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright:v1.20.0-focal
+FROM mcr.microsoft.com/playwright:v1.21.0-focal
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0.404-focal AS build
 
@@ -46,3 +46,7 @@ WORKDIR "/src/PlaywrightSharp"
 CMD ["dotnet", "test", "--no-restore", "--settings:Firefox.runsettings", "--logger:trx"]
 
 #docker run -it -v /Users/bogdanveres/Documents/Logs:/src/PlaywrightSharp/TestResults vbsorin/playwrightnet
+#docker run -it -v /Users/sorin.veres/Documents/Logs:/src/PlaywrightSharp/TestResults vbsorin/playwrightdemonet
+
+
+
