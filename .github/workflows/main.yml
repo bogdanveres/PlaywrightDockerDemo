@@ -26,7 +26,11 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - 
         name: Run tests
-        run: docker run -v /:/src/PlaywrightSharp/TestResults vbsorin/playwrightdemogh
+        run: |
+          using: 'docker'
+          image: 'Dockerfile'
+          args:
+            - "-v /:/src/PlaywrightSharp/TestResults"
       -
         name: Build and push
         uses: docker/build-push-action@v3
