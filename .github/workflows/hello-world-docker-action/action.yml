@@ -5,4 +5,4 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - "/:/src/PlaywrightSharp/TestResults"
+    - "/:/src/PlaywrightSharp/TestResults playwrightdemogh"
