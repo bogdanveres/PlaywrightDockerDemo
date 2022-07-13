@@ -16,6 +16,28 @@ pipeline {
             }
         }
         
+        stage('Test Docker image') {
+            agent {
+                label 'built-in'
+            }
+            steps {
+                script {
+                    
+                    try {                           
+                        def status = 0
+                        status = sh(returnStdout: true, script: "container-structure-test test --image vbsorin/playwrightdemonet --config ./unit-test.yaml --output json  | jq .Fail") as Integer
+                        if (status != 0) {                            
+                            error 'Image Test has failed'
+                        }
+        
+                    } catch (err) {
+                        error "Test-Image ERROR: The execution of the container structure tests failed, see the log for details."
+                        echo err
+                    } 
+                }
+            }
+        }
+        
         stage('Build') {
             agent {
                 docker {
