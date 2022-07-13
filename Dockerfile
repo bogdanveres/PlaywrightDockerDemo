@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright:v1.21.0-focal
+FROM mcr.microsoft.com/playwright:v1.23.1-focal
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0.404-focal AS build
 
