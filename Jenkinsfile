@@ -1,4 +1,9 @@
 pipeline {
+    environment {
+        imagename = "vbsorin/playwrightdemonet"
+        registryCredential = 'git'
+        dockerImage = ''
+    }
     agent any
     stages {
         stage('Clean WS') {
@@ -20,6 +25,25 @@ pipeline {
             }
             steps {
                 sh 'dotnet test /src/PlaywrightSharp.sln --settings:/src/PlaywrightSharp/Firefox.runsettings --logger:trx'
+            }
+        }
+
+        stage('Building image') {
+            steps {
+                script {
+                    dockerImage = docker.build imagename
+                }
+            }
+        }
+
+        stage('Deploy Image') {
+            steps{
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push("$BUILD_NUMBER")
+                        dockerImage.push('latest')
+                    }
+                }
             }
         }
         
