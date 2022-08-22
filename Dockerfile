@@ -1,6 +1,6 @@
-FROM mcr.microsoft.com/playwright:v1.23.1-focal
+FROM mcr.microsoft.com/playwright:v1.24.0-focal
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0.404-focal AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
 WORKDIR /src
 COPY ["PlaywrightSharp/PlaywrightSharp.csproj", "PlaywrightSharp/"]
